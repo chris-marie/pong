@@ -3,11 +3,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var ball = document.querySelector('#ball');
 
     var minx = ballBox.clientLeft;
-    var maxx = ballBox.clientLeft + ballBox.clientWidth;
+    var maxx = ballBox.clientLeft + ballBox.clientWidth - ball.clientWidth;
+    console.log(minx,maxx);
 
     var miny = ballBox.clientTop;
-    var maxy = ballBox.clientHeight + ballBox.clientTop;
-
+    var maxy = ballBox.clientHeight - ballBox.clientTop - ball.clientHeight;
+    console.log(miny,maxy);
     // CURRENTLY ONLY A GIVES THE OPPOSITE DIRECTION - LATER WILL CALCULATE ANGLE
     var directionObject = {
         'right': 'left',
@@ -16,57 +17,65 @@ document.addEventListener('DOMContentLoaded', function () {
         'down': 'up'
     };
 
+    var x, x2, y, y2, pos, pos2;
     ball.addEventListener('click', function () {
-        var x = ball.clientLeft;
-        var y = ball.clientTop;
         var xdir = 'right';
         var ydir = 'down';
 
         var intervalid = setInterval(function () {
-            bounce();
-
-        },500);
-
-        function bounce () {
             x = ball.clientLeft;
             y = ball.clientTop;
+           xy = bounce(x,y);
+            ball.style.left = xy[0] + 'vw';
+            ball.style.top = xy[1] + 'vh';
+
+            console.log('moving to: ', xy[0],',',xy[1]);
+        },500);
+
+        document.querySelector('button').addEventListener('click', function () {
+            clearInterval(intervalid);
+        });
+
+        function bounce (x,y) {
+            console.log('moving from: ', x,',',y);
 
             // CHECKS IF THE x WILL GO OUT OF BOUNDS AND INCREMENTS
-            if(inBounds(xdir,x)) {
-                x = getPosition(xdir,x);
-                console.log('IN x: ', x);
-            } else if (!inBounds (xdir,x)){
+            var x2 = getPosition(xdir,x);
+            var y2 = getPosition(ydir,y);
+            if(inBounds(xdir,y2)) {
+                console.log('IN x: ', x2, xdir);
+
+            } else if (!inBounds (xdir,x2)){
+                console.log('BEFORE: ', x2,xdir);
                 xdir = switchDirections(xdir);
-                x = getPosition(xdir,x);
-                console.log('SWITCH x: ',x);
+                x2 = getPosition(xdir,x);
+                console.log('SWITCH x: ',x2,xdir);
             }
 
             // CHECKS IF THE y WILL GO OUT OF BOUNDS AND INCREMENTS
-            if(inBounds(ydir,y)) {
-                y = getPosition(ydir,y);
-                console.log('IN y: ', y);
-            } else if (!inBounds(ydir,y)) {
+            if(inBounds(ydir,y2)) {
+                console.log('IN y: ', y2,ydir);
+            } else if (!inBounds(ydir,y2)) {
+                console.log('BEFORE: ', y2,ydir);
                 ydir = switchDirections(ydir);
-                y = getPosition(ydir,y);
-                console.log('SWITCH y: ',y);
+                y2 = getPosition(ydir,y);
+                console.log('SWITCH y: ',y2,ydir);
             }
-            console.log('moving to: ', x,',',y);
 
             //  ASSIGNS TO THE ball ELEMENT
-            ball.style.left = x;
-            ball.style.top = y;
+            return [x2,y2];
         }
 
     });
 
     function getPosition (direction, pos) {
         if(direction == 'right' || direction == 'down') {
-            var pos2 = increment(pos);
-            console.log('inc OLD,NEW: ',pos,',',pos2);
+            pos2 = increment(pos);
+            console.log('inc DIRENCTION,OLD,NEW: ',direction,pos,',',pos2);
             return pos2;
         } else if(direction == 'left' || direction == 'up') {
-            var pos2 = decrement(pos);
-            console.log('dec OLD,NEW: ',pos,',',pos2);
+            pos2 = decrement(pos);
+            console.log('dec DIRECTION,OLD,NEW: ',direction,pos,',',pos2);
             return pos2;
         }
     }
@@ -77,14 +86,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return directionObject[dirKey];
     }
 
-
     // REASON: I WANTED TO KEEP THESE SEPARATE FUNCTIONS
     // BECAUSE I WILL ADD GRAVITY/VELOCITY FACTORS TO THE INCREMENT LATER
     function increment (pos) {
-        return pos + 10;
+        return pos + 2;
     }
     function decrement(pos) {
-        return pos - 10;
+        return pos - 2;
     }
 
     // REASON: CHECKS THE BOUNDS DEPENDING ON THE DIRECTION TRAVELING
