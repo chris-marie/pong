@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>PONG!</title>
+    <style>
+        html, body {
+            height: 100vh;
+        }
+        body {
+            background: #000;
+        }
+        .pong_wrapper {
+            height: 80vh;
+            width: 70vw;
+            background-color: #eee;
+            border: 3px solid white;
+            position: relative;
+            top: 10vh;
+            left: 15vw;
+        }
+        #pong_field {
+            border: 1px solid #000;
+            height: 80vh;
+            width: 70vw;
+
+        }
+        #ball {
+            background-color: red;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            position:absolute;
+            top: 0vh;
+            left: 35vw;
+        }
+        #paddle_track {
+            background-color: white;
+            border: 1px solid black;
+            height: 4vh;
+            width: 70vw;
+            margin: 76vh auto;
+        }
+        #paddle {
+            background-color: blue;
+            height: 4vh;
+            width: 7vw;
+            position: absolute;
+            left: 0;
+        }
+        .play_btn_modal {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            background-color: rgba(0,255,0,0.4);
+            left: 0;
+            top: 0;
+        }
+        #play_btn {
+            color: white;
+            font-size: 2em;
+            padding: 2em;
+            background-color: rgba(0,255,0,1);
+            border: 2px solid rgba(6, 105, 31,1);
+            border-radius: 0.2em;
+            width: 4em;
+            height: 2em;
+            line-height: 2em;
+            text-align: center;
+            margin: 35vh auto;
+        }
+        #play_btn:hover {
+            box-shadow: 0 0 5px 5px blue;
+        }
+
+    </style>
+    <script src="play.js"></script>
+</head>
+<body>
+<div class="pong_wrapper">
+    <div id="pong_field">
+        <div id="ball"></div>
+        <div id="paddle_track">
+            <div id="paddle"></div>
+        </div>
+    </div>
+</div>
+<div class="play_btn_modal">
+    <div id="play_btn">PLAY</div>
+</div>
+
+<script>
+    // todo: add a game_over_modal, and show when person looses
+    // todo: add an end_game_btn - take to game_over_modal
+</script>
+</body>
+</html>
