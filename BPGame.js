@@ -20,13 +20,10 @@ function Game(HTMLElementContainer, ballElement, barElement, barXIncrement) {
 
 /**
  * @class Bar
- * @description This constructor creates a bar object with the following properties
- * @property element {HTMLElement} This is the HTMLElement corresponding to the HTML page
- * @property bounds {Object} The bounds object has a left, right, top, and bottom property depending upon the requirements
- * @property currPos {Object} Contains the x and y properties for the given entity
- * @property increment {Object} Currently stores the amount by which position should be incremented
- * @method move Moves the object within the bounds object by taking a boolean as a parameter
- * */
+ * @param barElement
+ * @param barXIncrement
+ * @constructor
+ */
 
 function Bar(barElement, barXIncrement) {
     this.element = barElement;
@@ -53,6 +50,11 @@ Bar.prototype.move = function(leftwards) {
     this.element.style.left = this.currPos.x + 'px';
 };
 
+/**
+ * @class Ball
+ * @param ballElement
+ * @constructor
+ */
 
 function Ball(ballElement) {
     this.element = ballElement;

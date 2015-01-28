@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             y = ball.clientTop;
             console.log('bouncing');
             if(inBounds(xdir,x)) {
-                console.log(incrementObject[xdir],',',incrementObject[xdir].call(x));
+                console.log(incrementObject[xdir],',',incrementObject[xdir](x));
                 incrementObject[xdir].call(x);
             } else if (!inBounds (xdir,x)){
                 xdir = switchDirections(xdir);
